@@ -1,7 +1,7 @@
 module.exports = class Team {
-    constructor(name) {
+    constructor(name, squad = []) {
         this.name = name
-        this.squad = []
+        this.squad = squad
         this.coach = ""
         this.matches = []
     }
@@ -13,6 +13,10 @@ module.exports = class Team {
 
     addMatch(match) {
         this.matches.push(match)
+    }
+
+    static create({name, squad}) {
+        return new Team(name, squad)
     }
     
 }
