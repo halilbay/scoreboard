@@ -11,9 +11,8 @@ const load = function(fileName, callback) {
             callback(err)
             return
         }
-        else {
-            callback(null, JSON.parse(file))
-        }
+        
+        callback(null, JSON.parse(file))
         
     } )
 }
