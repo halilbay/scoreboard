@@ -1,0 +1,7 @@
+extends layout 
+
+block content
+    h1 the number of the players is #{players.length}
+
+    each player in players
+        h5 #{player.name} #{player.surname}

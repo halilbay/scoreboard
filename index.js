@@ -1,33 +1,35 @@
-const Player = require('./models/player')
-const Team = require('./models/team')
-
+const express = require('express')
 const PlayerService = require('./services/player-service')
-const TeamService = require('./services/team-service')
 
-async function main() {
-    const belhanda = new Player('Younes', 'Belhanda', 34)
-    const muslera = new Player('Nando', 'Muslera', 34)
-    const falcao = new Player('Radamel', 'Falcao', 33)
+const app = express()
 
-    const gs = new Team('Galatasaray')
-    gs.addPlayer(belhanda)
-    gs.addPlayer(muslera)
-    gs.addPlayer(falcao)
+app.use(express.json())
+app.set('view engine', 'pug')
 
-    gs.report()
+app.get('/', (req, res) => {
+    res.render('index')
+})
 
-    await PlayerService.add(belhanda)
-    await PlayerService.add(muslera)
-    await PlayerService.add(falcao)
-
+app.get('/player/all', async (req, res) => {
     const players = await PlayerService.findAll()
-    console.log(players[1].name)
+    res.render('player-list', {players})
+})
 
-    await PlayerService.del(2)
+app.get('/player/:id', async (req, res) => {
+    const player = await PlayerService.find(req.params.id)
+    res.render('player', {player})
+})
 
-    const newPlayers = await PlayerService.findAll()
-    console.log(players[1].name)
+app.post('/player', async (req, res) => {
+    const item = await PlayerService.add(req.body)
+    res.send(item)
+})
 
-}
+app.delete('/player/:id', async (req, res) => {
+    const deletedPlayer = PlayerService.del(req.params.id)
+    res.send(deletedPlayer)
+})
 
-main()
+app.listen(3000, () => {
+    console.log('Server listening')
+})
