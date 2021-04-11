@@ -1,28 +1,31 @@
-module.exports = class Team {
-    constructor(name, id, squad = []) {
-        this.name = name
-        this.squad = squad
-        this.id = id
-        this.coach = ""
-        this.matches = []
-    }
+const mongoose = require('mongoose')
 
-    addPlayer(player) {
-        this.squad.push(player)
-        console.log(`The player: ${player.name} has joined ${this.name}!`)
-        //player.changeTeam(this.name)
-    }
+const TeamSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minLength: 3
+    },
+    squad: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Player',
+        autopopulate: {
+            maxDepth: 1
+        }
+    }],
+    coach: {
+        type: String
+    },
+    matches: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Match',
+        autopopulate: {
+            maxDepth: 1
+        }
+    }]
+})
 
-    addMatch(match) {
-        this.matches.push(match)
-    }
+TeamSchema.plugin(require('mongoose-autopopulate'))
+const TeamModel = mongoose.model('Team', TeamSchema)
 
-    report() {
-        console.log(`${this.name} football team has ${this.squad.length} player(s)`)
-    }
-
-    static create({name, squad, id}) {
-        return new Team(name, squad, id)
-    }
-    
-}
+module.exports = TeamModel

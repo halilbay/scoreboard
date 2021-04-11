@@ -1,21 +1,30 @@
-module.exports = class Match {
-    constructor(teamHome, teamAway, matchDate, league, id) {
-        this.teamHome = teamHome
-        this.teamAway = teamAway
-        this.matchDate = matchDate
-        this.league = league
-        this.id = id
-        this.stadium = ""
-        this.refs = []
+const mongoose = require('mongoose')
 
-    }
+const MatchSchema = new mongoose.Schema({
+    home: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Team',
+        autopopulate: {
+            maxDepth: 1
+        }
+    },
+    away: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Team',
+        autopopulate: {
+            maxDepth: 1
+        }
+    },
+    date: Date,
+    stadium: String,
+    league: String,
+    refs: [{
+        type: String,
+        maxLength: 3
+    }]
+})
 
-    addInfo(stadium, refs){   
-        this.stadium = stadium
-        this.refs = refs
-    }
+MatchSchema.plugin(require('mongoose-autopopulate'))
+const MatchModel = mongoose.model('Match', MatchSchema)
 
-    static create({home, away, date, league, id}) {
-        return new Match(home, away, date, league, id)
-    }
-}
+module.exports = MatchModel

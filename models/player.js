@@ -1,22 +1,32 @@
-module.exports = class Player {
-    constructor(name, surname, age, id) {
-        this.name = name
-        this.surname = surname
-        this.id = id
-        this.position = []
-        this.currentTeam = ""
-        this.age = age
-    }
+const mongoose = require('mongoose')
 
-    addPosition(position) {
-        this.position.push(position)
+const PlayerSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minLength: 2
+    },
+    surname: {
+        type: String,
+        required: true,
+        minLength: 2
+    },
+    age: {
+        type: Number,
+        required: true,
+        min: 15
+    },
+    currentTeam: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Team',
+        autopopulate: {
+            maxDepth: 1
+        }
     }
+})
 
-    changeTeam(teamName) {
-        this.currentTeam = teamName
-    }
+PlayerSchema.plugin(require('mongoose-autopopulate'))
 
-    static create({name, surname, age, id}) {
-        return new Player(name, surname, age, id)
-    }
-}
+const PlayerModel = mongoose.model('Player', PlayerSchema)
+
+module.exports = PlayerModel
