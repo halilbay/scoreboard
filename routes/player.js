@@ -10,17 +10,22 @@ router.use(function timeLog(req, res, next){
 
 router.get('/all', async (req, res) => {
     const players = await PlayerService.findAll()
-    res.render('player-list', {players})
+    res.render('player/all', {players})
+})
+
+router.get('/all/json', async (req, res) => {
+    const players = await PlayerService.findAll()
+    res.send(players)
 })
 
 router.get('/:id', async (req, res) => {
     const player = await PlayerService.find(req.params.id)
-    res.render('player', {player})
+    res.render('player/index', {player})
 })
 
 router.post('/', async (req, res) => {
-    const item = await PlayerService.add(req.body)
-    res.send(item)
+    const player = await PlayerService.add(req.body)
+    res.send(player)
 })
 
 router.delete('/:id', async (req, res) => {

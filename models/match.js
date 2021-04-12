@@ -1,5 +1,13 @@
 const mongoose = require('mongoose')
 
+const MatchStatus = {
+    notStarted: "NOT STARTED",
+    playing: "PLAYING",
+    played: "PLAYED",
+    postponed: "POSTPONED",
+    stopped: "STOPPED"
+}
+
 const MatchSchema = new mongoose.Schema({
     home: {
         type: mongoose.SchemaTypes.ObjectId,
@@ -15,7 +23,24 @@ const MatchSchema = new mongoose.Schema({
             maxDepth: 1
         }
     },
-    date: Date,
+    homeScore: {
+        type: Number,
+        default: 0
+    },
+    awayScore: {
+        type: Number,
+        default: 0
+    },
+    status: {
+        type: String,
+        enum: Object.values(MatchStatus),
+        default: MatchStatus.notStarted,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: new Date
+    },
     stadium: String,
     league: String,
     refs: [{
