@@ -4,3 +4,6 @@ block content
     h1 Team Info
 
     p Name: #{team.name}
+
+    each player in team.squad:
+        p #{player.name} #{player.surname}

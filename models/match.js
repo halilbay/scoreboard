@@ -1,12 +1,5 @@
 const mongoose = require('mongoose')
-
-const MatchStatus = {
-    notStarted: "NOT STARTED",
-    playing: "PLAYING",
-    played: "PLAYED",
-    postponed: "POSTPONED",
-    stopped: "STOPPED"
-}
+const MatchStatus = require('../constants')
 
 const MatchSchema = new mongoose.Schema({
     home: {

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const PlayerService = require('../services/player-service')
+const TeamService = require('../services/team-service')
 
 router.use(function timeLog(req, res, next){
     console.log('Time: ', Date.now().toString())
@@ -34,7 +35,12 @@ router.delete('/:id', async (req, res) => {
 })
 
 router.post('/:id/team', async (req, res) => {
-    res.send('it works')
+    const player = await PlayerService.find(req.params.id)
+    const team = await TeamService.find(req.body.team)
+
+    await PlayerService.joinTeam(player, team)
+
+    res.send(player)
 })
 
 module.exports = router
