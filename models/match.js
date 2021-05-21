@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const MatchStatus = require('../constants')
+const MatchStatus = require('../constants/match-status')
 
 const MatchSchema = new mongoose.Schema({
     home: {

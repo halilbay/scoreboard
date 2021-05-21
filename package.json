@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava --verbose",
+    "test-coverage": "nyc ava --verbose"
   },
   "keywords": [],
   "author": "",
@@ -13,11 +14,15 @@
     "chalk": "^4.1.0",
     "express": "^4.17.1",
     "flatted": "^2.0.1",
+    "http-status-codes": "^2.1.4",
     "mongoose": "^5.12.3",
     "mongoose-autopopulate": "^0.12.3",
     "pug": "^3.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "ava": "^3.15.0",
+    "nodemon": "^2.0.7",
+    "nyc": "^15.1.0",
+    "supertest": "^6.1.3"
   }
 }

@@ -6,7 +6,7 @@ class MatchService extends BaseService {
 
     async setMatchStatus(match, status) {
         match.status = status
-        match.save()
+        await match.save()
     }
 }
 
