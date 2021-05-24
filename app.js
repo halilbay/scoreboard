@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 require('./mongo-connection')
 
 const playerRouter = require('./routes/player')
@@ -10,6 +11,7 @@ const app = express()
 app.set('view engine', 'pug')
 
 app.use(express.json())
+app.use(cors())
 
 // routers
 app.use('/player', playerRouter)

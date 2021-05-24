@@ -1,6 +1,6 @@
 <template lang="pug">
 main
-  p deneem {{counter}}
+  p Hello World
 </template>
 
 <script>

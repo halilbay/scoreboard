@@ -1,7 +1,7 @@
 <template lang="pug">
 main
-  p {{counter}}
-  HelloWorld {{counter}}
+  .card(v-for="player in players")
+    h2 {{player.name}} {{player.surname}}
 </template>
 
 <script>
@@ -15,13 +15,13 @@ export default {
     HelloWorld,
   },
   computed: {
-    ...mapState(["counter"]),
+    ...mapState(["players"]),
   },
   methods: {
-    ...mapActions(["incrementCounter"]),
+    ...mapActions(["fetchPlayers"]),
   },
   created() {
-    this.incrementCounter();
+    this.fetchPlayers();
   },
 };
 </script>
